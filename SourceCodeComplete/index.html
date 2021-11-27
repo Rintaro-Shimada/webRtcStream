@@ -8,26 +8,23 @@
     <link rel="stylesheet" href="public/Assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="public/Assets/css/style.css">
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-      const socket = io();
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
     <script src="public/Assets/js/jquery-3.4.1.min.js"></script>
     <script src="public/Assets/js/app.js"></script>
     <script>
       $(function () {
         const urlParams = new URLSearchParams(window.location.search);
-        var meetingId = urlParams.get("meetingID");
-        var userId = window.prompt("Enter your User ID");
+        var meeting_id = urlParams.get('meetingID');
+        var user_id = window.prompt('Enter your userid');
 
-        if (!userId || !meetingId) {
-          alert("user ID or Meeting ID is missing")
-          window.location.href = "/action.html"
+        if (!user_id || !meeting_id) {
+          alert('User id or meeting id missing');
+          window.location.href = '/action.html';
           return;
         }
-        $("meetingContainer").show();
+        $("#meetingContainer").show();
 
-        MyApp()._init(userId, meetingId)
+        MyApp._init(user_id, meeting_id);
       })
     </script>
 </head>
@@ -41,13 +38,13 @@
                         <div id="me" class="userbox display-center flex-column">
                             <h2 class="display-center" style="font-size: 14px;"></h2>
                             <div class="display-center">
-                                <video autoplay muted id="localVideoPlayer"></video>
+                                <video autoplay muted id="locaVideoPlayer" style="width: 100%; height: 100%"></video>
                             </div>
                         </div>
                         <div id="otherTemplate" class="userbox display-center flex-column" style="display:none">
                             <h2 class="display-center" style="font-size: 14px;"></h2>
                             <div class="display-center">
-                                <video autoplay muted></video>
+                                <video autoplay muted style="width: 100%; height: 100%"></video>
                                 <audio autoplay controls style="display:none"></audio>
                             </div>
                         </div>
@@ -205,7 +202,7 @@
         <div class="bottom-right d-flex just-content-center align-items-center mr-3" id="screenShare-wrap"
              style="height: 10vh;">
             <div class="present-now-wrap d-flex just-content-center flex-column align-items-center mr-5 cursor-pointer"
-                 id="btnScreenShareOnOff">
+                 id="ScreenShareOnOf">
                 <span class="material-icons">present_to_all</span>
                 <div>Present Now</div>
             </div>

@@ -10,6 +10,7 @@ const server = app.listen(port, function () {
 const io = require("socket.io")(server, {
   allowEIO3: true,
 });
+
 app.use(express.static(path.join(__dirname, "")));
 let userConnections = [];
 io.on("connection", (socket) => {
@@ -19,7 +20,7 @@ io.on("connection", (socket) => {
     var otherUsers = userConnections.filter((p) => p.meetingId === data.meetingId);
     userConnections.push({
       connectionId: socket.id,
-      UserId: data.UserId,
+      userId: data.userId,
       meetingId: data.meetingId,
     });
 
@@ -29,5 +30,13 @@ io.on("connection", (socket) => {
         connectionId: socket.id,
       });
     });
+
+    socket.emit("informMeAboutOtherUser", otherUsers);
+  })
+  socket.on("SDPProcess", (data)=> {
+    socket.to(data.toConnectionId).emit("SDPProcess", {
+      message: data.message,
+      fromConnectionId: socket.id,
+    })
   })
 })
